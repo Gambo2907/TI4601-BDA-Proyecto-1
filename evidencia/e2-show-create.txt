@@ -1,0 +1,53 @@
+ table_name |                       create_statement                       
+------------+--------------------------------------------------------------
+ cliente    | CREATE TABLE public.cliente (                               +
+            |         cliente_id UUID NOT NULL DEFAULT gen_random_uuid(), +
+            |         nombre STRING NOT NULL,                             +
+            |         documento STRING NOT NULL,                          +
+            |         region public.crdb_internal_region NOT NULL,        +
+            |         CONSTRAINT cliente_pkey PRIMARY KEY (cliente_id ASC)+
+            | ) LOCALITY REGIONAL BY ROW AS region
+(1 row)
+
+ table_name |                                                     create_statement                                                     
+------------+--------------------------------------------------------------------------------------------------------------------------
+ cuenta     | CREATE TABLE public.cuenta (                                                                                            +
+            |         cuenta_id UUID NOT NULL DEFAULT gen_random_uuid(),                                                              +
+            |         cliente_id UUID NOT NULL,                                                                                       +
+            |         saldo DECIMAL(12,2) NOT NULL,                                                                                   +
+            |         region public.crdb_internal_region NOT NULL,                                                                    +
+            |         CONSTRAINT cuenta_pkey PRIMARY KEY (cuenta_id ASC),                                                             +
+            |         CONSTRAINT fk_cuenta_clientes FOREIGN KEY (cliente_id) REFERENCES public.cliente(cliente_id) ON DELETE RESTRICT,+
+            |         CONSTRAINT check_saldo CHECK (saldo >= 0:::DECIMAL)                                                             +
+            | ) LOCALITY REGIONAL BY ROW AS region
+(1 row)
+
+ table_name |                                                                                                                                                                                     create_statement                                                                                                                                                                                      
+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ movimiento | CREATE TABLE public.movimiento (                                                                                                                                                                                                                                                                                                                                                         +
+            |         mov_id UUID NOT NULL DEFAULT gen_random_uuid(),                                                                                                                                                                                                                                                                                                                                  +
+            |         cuenta_ori_id UUID NULL,                                                                                                                                                                                                                                                                                                                                                         +
+            |         cuenta_dest_id UUID NULL,                                                                                                                                                                                                                                                                                                                                                        +
+            |         monto DECIMAL(12,2) NOT NULL,                                                                                                                                                                                                                                                                                                                                                    +
+            |         tipo STRING NOT NULL,                                                                                                                                                                                                                                                                                                                                                            +
+            |         fecha TIMESTAMPTZ NOT NULL DEFAULT now():::TIMESTAMPTZ,                                                                                                                                                                                                                                                                                                                          +
+            |         region public.crdb_internal_region NOT NULL,                                                                                                                                                                                                                                                                                                                                     +
+            |         CONSTRAINT movimiento_pkey PRIMARY KEY (mov_id ASC),                                                                                                                                                                                                                                                                                                                             +
+            |         CONSTRAINT fk_cuenta_ori_movimiento FOREIGN KEY (cuenta_ori_id) REFERENCES public.cuenta(cuenta_id) ON DELETE RESTRICT,                                                                                                                                                                                                                                                          +
+            |         CONSTRAINT fk_cuenta_dest_movimiento FOREIGN KEY (cuenta_dest_id) REFERENCES public.cuenta(cuenta_id) ON DELETE RESTRICT,                                                                                                                                                                                                                                                        +
+            |         CONSTRAINT check_cuenta CHECK ((((((tipo = 'TRANSFERENCIA':::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NOT NULL)) AND (cuenta_ori_id != cuenta_dest_id)) OR (((tipo = 'DEPOSITO':::STRING) AND (cuenta_ori_id IS NULL)) AND (cuenta_dest_id IS NOT NULL))) OR (((tipo = 'RETIRO':::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NULL))),+
+            |         CONSTRAINT check_monto CHECK (monto > 0:::DECIMAL),                                                                                                                                                                                                                                                                                                                              +
+            |         CONSTRAINT check_tipo CHECK (tipo IN ('TRANSFERENCIA':::STRING, 'DEPOSITO':::STRING, 'RETIRO':::STRING))                                                                                                                                                                                                                                                                         +
+            | ) LOCALITY REGIONAL BY ROW AS region
+(1 row)
+
+    table_name     |                                                    create_statement                                                    
+-------------------+------------------------------------------------------------------------------------------------------------------------
+ referencia_cuenta | CREATE TABLE public.referencia_cuenta (                                                                               +
+                   |         cuenta_id UUID NOT NULL,                                                                                      +
+                   |         region public.crdb_internal_region NOT NULL,                                                                  +
+                   |         CONSTRAINT referencia_cuenta_pkey PRIMARY KEY (cuenta_id ASC),                                                +
+                   |         CONSTRAINT fk_referencia_cuenta FOREIGN KEY (cuenta_id) REFERENCES public.cuenta(cuenta_id) ON DELETE RESTRICT+
+                   | ) LOCALITY GLOBAL
+(1 row)
+

@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS movimiento (
 
 )LOCALITY REGIONAL BY ROW AS region;
 
-CREATE TABLE ReferenciaCuenta (
+CREATE TABLE IF NOT EXISTS referencia_cuenta (
     cuenta_id UUID PRIMARY KEY,
-    region crdb_internal_region NOT NULL
+    region crdb_internal_region NOT NULL,
 
     CONSTRAINT fk_referencia_cuenta
         FOREIGN KEY (cuenta_id)
