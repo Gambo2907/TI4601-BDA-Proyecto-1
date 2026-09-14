@@ -67,6 +67,11 @@ CREATE TABLE IF NOT EXISTS movimiento (
 CREATE TABLE ReferenciaCuenta (
     cuenta_id UUID PRIMARY KEY,
     region crdb_internal_region NOT NULL
+
+    CONSTRAINT fk_referencia_cuenta
+        FOREIGN KEY (cuenta_id)
+        REFERENCES cuenta(cuenta_id)
+        ON DELETE RESTRICT
 ) LOCALITY GLOBAL;
 
 
