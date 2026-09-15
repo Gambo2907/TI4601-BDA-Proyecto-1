@@ -6,10 +6,7 @@ from decimal import Decimal
 import random
 import uuid
 
-
-# ============================================================
-# Configuración reproducible
-# ============================================================
+# Configuracion
 
 SEED = 4601
 rng = random.Random(SEED)
@@ -50,14 +47,12 @@ MOVIMIENTOS_POR_REGION = {
     },
 }
 
-# Aproximadamente 30 % de las cuentas adicionales pertenecerán
-# a clientes cuya región de apertura es distinta.
+# Aproximadamente 30 % de las cuentas adicionales perteneceran
+# a clientes cuya region de apertura es distinta.
 PROB_CUENTA_INTERREGIONAL = 0.30
 
 
-# ============================================================
 # Utilidades
-# ============================================================
 
 def deterministic_uuid(tipo: str, numero: int) -> str:
     """
@@ -85,9 +80,8 @@ def dinero(minimo: int, maximo: int) -> str:
     return f"{valor:.2f}"
 
 
-# ============================================================
+
 # 1. Clientes
-# ============================================================
 
 clientes = []
 clientes_por_region = {region: [] for region in REGIONES}
@@ -111,9 +105,8 @@ for region in REGIONES:
         cliente_num += 1
 
 
-# ============================================================
+
 # 2. Cuentas
-# ============================================================
 
 cuentas = []
 cuentas_por_region = {region: [] for region in REGIONES}
@@ -137,22 +130,21 @@ def crear_cuenta(cliente, region):
     cuenta_num += 1
 
 
-# ------------------------------------------------------------
+
 # Primera cuenta obligatoria:
-# misma región que el cliente.
-# ------------------------------------------------------------
+# misma region que el cliente.
+
 
 for cliente in clientes:
     crear_cuenta(cliente, cliente["region"])
 
+"""
+Cuentas adicionales hasta alcanzar los totales regionales.
+Algunas pertenecen intencionalmente a clientes de otra region.
+Esto permite representar clientes con cuentas regionalmente
+distribuidas.
+"""
 
-# ------------------------------------------------------------
-# Cuentas adicionales hasta alcanzar los totales regionales.
-#
-# Algunas pertenecen intencionalmente a clientes de otra región.
-# Esto permite representar clientes con cuentas regionalmente
-# distribuidas.
-# ------------------------------------------------------------
 
 for region in REGIONES:
 
@@ -179,9 +171,7 @@ for region in REGIONES:
         crear_cuenta(propietario, region)
 
 
-# ============================================================
 # 3. ReferenciaCuenta
-# ============================================================
 
 referencias = [
     {
@@ -192,9 +182,8 @@ referencias = [
 ]
 
 
-# ============================================================
+
 # 4. Movimientos
-# ============================================================
 
 movimientos = []
 movimiento_num = 1
@@ -257,16 +246,16 @@ for region in REGIONES:
         if cuenta["region"] != region
     ]
 
-    # --------------------------------------------------------
-    # TRANSFERENCIAS
-    #
-    # Alternamos:
-    # - transferencia local
-    # - transferencia entre regiones
-    #
-    # En ambas, la cuenta origen pertenece a la región donde
-    # se genera el movimiento.
-    # --------------------------------------------------------
+    """
+    TRANSFERENCIAS
+    
+    Alternamos:
+     - transferencia local
+     - transferencia entre regiones
+
+    En ambas, la cuenta origen pertenece a la region donde
+    se genera el movimiento.
+    """
 
     for i in range(config["TRANSFERENCIA"]):
 
@@ -292,13 +281,12 @@ for region in REGIONES:
             destino=destino,
         )
 
-    # --------------------------------------------------------
-    # DEPÓSITOS
+
+    # DEPOSITOS
     #
     # origen = NULL
     # destino = cuenta
-    # --------------------------------------------------------
-
+   
     for _ in range(config["DEPOSITO"]):
 
         destino = rng.choice(cuentas_locales)
@@ -310,13 +298,11 @@ for region in REGIONES:
             destino=destino,
         )
 
-    # --------------------------------------------------------
     # RETIROS
     #
     # origen = cuenta
     # destino = NULL
-    # --------------------------------------------------------
-
+   
     for _ in range(config["RETIRO"]):
 
         origen = rng.choice(cuentas_locales)
@@ -329,9 +315,8 @@ for region in REGIONES:
         )
 
 
-# ============================================================
+
 # 5. Validaciones antes de generar SQL
-# ============================================================
 
 assert len(clientes) == 177
 assert len(cuentas) == 420
@@ -370,9 +355,9 @@ for mov in movimientos:
         assert mov["cuenta_dest_id"] is None
 
 
-# ============================================================
+
 # 6. Generación de seed.sql
-# ============================================================
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
@@ -385,7 +370,7 @@ sql.append("""\
 -- Proyecto 1 - Base de datos distribuida
 -- Seed reproducible
 --
--- Generado automáticamente por scripts/generate_seed.py
+-- Generado automaticamente por scripts/generate_seed.py
 -- SEED = 4601
 --
 -- Totales:
@@ -397,7 +382,7 @@ sql.append("""\
 
 BEGIN;
 
--- Limpiar únicamente las tablas propias del Proyecto 1.
+-- Limpiar unicamente las tablas propias del Proyecto 1.
 -- Se respeta el orden de dependencias de las FK.
 DELETE FROM movimiento;
 DELETE FROM referencia_cuenta;
@@ -407,9 +392,8 @@ DELETE FROM cliente;
 """)
 
 
-# ------------------------------------------------------------
+
 # Clientes
-# ------------------------------------------------------------
 
 sql.append(
     "-- ========================================================\n"
@@ -438,9 +422,8 @@ sql.append(",\n".join(filas))
 sql.append(";\n\n")
 
 
-# ------------------------------------------------------------
+
 # Cuentas
-# ------------------------------------------------------------
 
 sql.append(
     "-- ========================================================\n"
@@ -469,9 +452,8 @@ sql.append(",\n".join(filas))
 sql.append(";\n\n")
 
 
-# ------------------------------------------------------------
+
 # ReferenciaCuenta
-# ------------------------------------------------------------
 
 sql.append(
     "-- ========================================================\n"
@@ -498,9 +480,8 @@ sql.append(",\n".join(filas))
 sql.append(";\n\n")
 
 
-# ------------------------------------------------------------
+
 # Movimientos
-# ------------------------------------------------------------
 
 sql.append(
     "-- ========================================================\n"
@@ -562,9 +543,8 @@ OUTPUT.write_text(
 )
 
 
-# ============================================================
+
 # 7. Resumen
-# ============================================================
 
 print(f"Seed generado correctamente: {OUTPUT}")
 print()
@@ -622,8 +602,8 @@ for region in REGIONES:
     print()
 
 
-# Mostrar cuántas cuentas pertenecen a clientes
-# cuya región es distinta.
+# Mostrar cuantas cuentas pertenecen a clientes
+# cuya region es distinta.
 cliente_region = {
     cliente["cliente_id"]: cliente["region"]
     for cliente in clientes
@@ -637,6 +617,6 @@ cuentas_interregionales = sum(
 )
 
 print(
-    "Cuentas cuya región difiere "
-    f"de la región del cliente: {cuentas_interregionales}"
+    "Cuentas cuya region difiere "
+    f"de la region del cliente: {cuentas_interregionales}"
 )

@@ -11,9 +11,9 @@ from pathlib import Path
 import psycopg
 
 
-# ============================================================
-# Configuración
-# ============================================================
+
+# Configuracion
+
 
 LOCAL_REGION = "cr-sj"
 REMOTE_REGION = "cr-limon"
@@ -26,9 +26,8 @@ TRANSFER_AMOUNT = Decimal("0.01")
 OUTPUT_FILE = Path("/proyecto/evidencia/e3-mediciones.csv")
 
 
-# ============================================================
+
 # Utilidades
-# ============================================================
 
 def ms(inicio_ns, fin_ns):
     """Convierte nanosegundos a milisegundos."""
@@ -49,7 +48,7 @@ def percentil_nearest_rank(valores, percentil):
 
 def seleccionar_cuentas(conn, region, cantidad):
     """
-    Selecciona cuentas de una región.
+    Selecciona cuentas de una region.
     Se prefieren las de mayor saldo para evitar problemas
     durante las transferencias del benchmark.
     """
@@ -68,9 +67,9 @@ def seleccionar_cuentas(conn, region, cantidad):
         return cur.fetchall()
 
 
-# ============================================================
+
 # Lecturas
-# ============================================================
+
 
 def medir_lectura(conn, cuenta_id, region):
     """
@@ -103,9 +102,8 @@ def medir_lectura(conn, cuenta_id, region):
     return ms(inicio, fin)
 
 
-# ============================================================
+
 # Escrituras
-# ============================================================
 
 def medir_transferencia(
     conn,
@@ -117,9 +115,9 @@ def medir_transferencia(
     """
     Ejecuta una transferencia bancaria.
 
-    La medición incluye:
-      1. débito de cuenta origen;
-      2. crédito de cuenta destino;
+    La medicion incluye:
+      1. debito de cuenta origen;
+      2. credito de cuenta destino;
       3. INSERT en movimiento;
       4. COMMIT.
 
@@ -135,7 +133,7 @@ def medir_transferencia(
 
         with conn.cursor() as cur:
 
-            # Débito
+            # Debito
             cur.execute(
                 """
                 UPDATE cuenta
@@ -212,9 +210,8 @@ def medir_transferencia(
     return ms(inicio, fin), mov_id
 
 
-# ============================================================
+
 # Limpieza
-# ============================================================
 
 def limpiar_transferencias(
     conn,
@@ -260,9 +257,9 @@ def limpiar_transferencias(
     print("Base de datos restaurada.")
 
 
-# ============================================================
-# Estadísticas
-# ============================================================
+
+# Estadisticas
+
 
 def mostrar_resultado(nombre, valores):
     p50 = statistics.median(valores)
@@ -276,9 +273,9 @@ def mostrar_resultado(nombre, valores):
     )
 
 
-# ============================================================
+
 # Programa principal
-# ============================================================
+
 
 def main():
 
@@ -299,9 +296,9 @@ def main():
 
     try:
 
-        # ----------------------------------------------------
-        # Verificar desde qué región estamos ejecutando
-        # ----------------------------------------------------
+        
+        # Verificar desde que region estamos ejecutando
+        
 
         with conn.cursor() as cur:
 
@@ -322,9 +319,9 @@ def main():
                 f"{gateway}."
             )
 
-        # ----------------------------------------------------
+        
         # Seleccionar cuentas
-        # ----------------------------------------------------
+        
 
         cuentas_locales = seleccionar_cuentas(
             conn,
@@ -348,10 +345,9 @@ def main():
                 f"No hay suficientes cuentas en {REMOTE_REGION}"
             )
 
-        # ----------------------------------------------------
+        
         # Cuentas utilizadas
-        # ----------------------------------------------------
-
+        
         lectura_local = cuentas_locales[0]
         lectura_remota = cuentas_remotas[0]
 
@@ -378,9 +374,9 @@ def main():
             f"{destino_interregional[0]}"
         )
 
-        # ----------------------------------------------------
+        
         # Guardar saldos iniciales
-        # ----------------------------------------------------
+       
 
         cuentas_originales = [
             (
@@ -405,9 +401,9 @@ def main():
             ),
         ]
 
-        # ----------------------------------------------------
+       
         # Resultados
-        # ----------------------------------------------------
+        
 
         resultados = {
             "lectura_local": [],
@@ -416,9 +412,9 @@ def main():
             "escritura_interregional": [],
         }
 
-        # ====================================================
+        #
         # 1. LECTURA LOCAL
-        # ====================================================
+        
 
         print("\n[1/4] Lectura local")
 
@@ -449,9 +445,9 @@ def main():
 
         print()
 
-        # ====================================================
+        
         # 2. LECTURA REMOTA
-        # ====================================================
+        
 
         print("\n[2/4] Lectura remota")
 
@@ -482,9 +478,9 @@ def main():
 
         print()
 
-        # ====================================================
+       
         # 3. ESCRITURA LOCAL
-        # ====================================================
+        
 
         print("\n[3/4] Escritura local")
 
@@ -524,9 +520,9 @@ def main():
 
         print()
 
-        # ====================================================
+        
         # 4. ESCRITURA INTERREGIONAL
-        # ====================================================
+        
 
         print("\n[4/4] Escritura interregional")
 
@@ -566,9 +562,9 @@ def main():
 
         print()
 
-        # ====================================================
+        
         # Guardar CSV
-        # ====================================================
+        
 
         OUTPUT_FILE.parent.mkdir(
             parents=True,
@@ -606,9 +602,9 @@ def main():
                         ]
                     )
 
-        # ====================================================
+        
         # Resumen
-        # ====================================================
+        
 
         print("\n")
         print(
@@ -646,9 +642,9 @@ def main():
 
     finally:
 
-        # ----------------------------------------------------
+       
         # Restaurar BD incluso si ocurre un error
-        # ----------------------------------------------------
+        
 
         if movimientos_creados:
 
