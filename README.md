@@ -604,3 +604,39 @@ make lab1-down
 ---
 
 ## 16. Mediciones de rendimiento
+
+
+Las mediciones del Entregable 3 se ejecutan desde el gateway ubicado en
+`cr-sj`, manteniendo el mismo clúster y las mismas condiciones de recursos para todos los casos.
+
+Se consideran cuatro operaciones:
+
+- **Lectura local:** consulta realizada desde `cr-sj` sobre una cuenta cuya
+  región hogar es `cr-sj`.
+- **Lectura remota:** consulta realizada desde `cr-sj` sobre una cuenta cuya
+  región hogar es `cr-limon`.
+- **Escritura local:** transferencia entre dos cuentas ubicadas en `cr-sj`.
+- **Escritura interregional:** transferencia cuya cuenta origen pertenece a
+  `cr-sj` y cuya cuenta destino pertenece a `cr-limon`.
+
+Para evitar que el arranque inicial afecte los resultados, se ejecutan 5 operaciones de calentamiento por caso que no se incluyen en las estadísticas. Posteriormente se realizan 50 mediciones por operación.
+
+La latencia se mide con `time.perf_counter_ns()` y se expresa en milisegundos. Para cada caso se reportan la mediana (p50) y el percentil 99 (p99).
+
+El benchmark se ejecuta con:
+
+```bash
+docker compose --profile lab1 run --rm --no-deps \
+  -v "$PROYECTO:/proyecto" \
+  app-crdb \
+  python /proyecto/scripts/benchmark_e3.py
+```
+
+Los resultados individuales y la salida completa de la corrida utilizada como evidencia se almacenan en:
+
+```text
+evidencia/
+├── e3-mediciones.txt
+├── e3-resumen.txt
+```
+
