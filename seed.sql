@@ -2,7 +2,7 @@
 -- Proyecto 1 - Base de datos distribuida
 -- Seed reproducible
 --
--- Generado automáticamente por scripts/generate_seed.py
+-- Generado automaticamente por scripts/generate_seed.py
 -- SEED = 4601
 --
 -- Totales:
@@ -14,7 +14,7 @@
 
 BEGIN;
 
--- Limpiar únicamente las tablas propias del Proyecto 1.
+-- Limpiar unicamente las tablas propias del Proyecto 1.
 -- Se respeta el orden de dependencias de las FK.
 DELETE FROM movimiento;
 DELETE FROM referencia_cuenta;
