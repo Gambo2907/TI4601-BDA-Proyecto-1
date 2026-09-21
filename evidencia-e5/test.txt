@@ -1,0 +1,26 @@
+ti4601_ctrl=> \c ti4601
+psql (17.11 (Debian 17.11-0+deb13u1), server 13.0.0)
+You are now connected to database "ti4601" as user "root".
+ti4601=> \timing on
+Timing is on.
+ti4601=> SELECT * FROM cliente WHERE region = 'cr-sj' LIMIT 1;
+              cliente_id              |      nombre       |   documento    | region 
+--------------------------------------+-------------------+----------------+--------
+ 002bbd09-a69b-574a-8394-de6f69238787 | Cliente cr-sj 041 | DOC-CR-SJ-0041 | cr-sj
+(1 row)
+
+Time: 3.702 ms
+ti4601=> SELECT * FROM cliente WHERE region = 'cr-limon' LIMIT 1;
+              cliente_id              |        nombre        |     documento     |  region  
+--------------------------------------+----------------------+-------------------+----------
+ 27a51ef8-e7db-59e0-ba46-8e600dbd7fe9 | Cliente cr-limon 026 | DOC-CR-LIMON-0026 | cr-limon
+(1 row)
+
+Time: 5.219 ms
+ti4601=> SELECT * FROM cliente WHERE region = 'us-east' LIMIT 1;
+              cliente_id              |       nombre        |    documento     | region  
+--------------------------------------+---------------------+------------------+---------
+ 0090d04c-7f3f-5ab6-85e8-1850fadd9bef | Cliente us-east 096 | DOC-US-EAST-0096 | us-east
+(1 row)
+
+Time: 4.017 ms
