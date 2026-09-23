@@ -1,5 +1,2 @@
 # Caché de Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+scripts/__pycache__/
