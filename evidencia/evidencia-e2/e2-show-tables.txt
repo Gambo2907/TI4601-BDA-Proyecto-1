@@ -1,0 +1,10 @@
+ schema_name |    table_name     | type  | owner | estimated_row_count |         locality          
+-------------+-------------------+-------+-------+---------------------+---------------------------
+ public      | catalogo_producto | table | root  |                   2 | GLOBAL
+ public      | cliente           | table | root  |                   0 | REGIONAL BY ROW AS region
+ public      | cuenta            | table | root  |                   0 | REGIONAL BY ROW AS region
+ public      | movimiento        | table | root  |                   0 | REGIONAL BY ROW AS region
+ public      | pedido            | table | root  |                   3 | REGIONAL BY ROW AS region
+ public      | referencia_cuenta | table | root  |                   0 | GLOBAL
+(6 rows)
+

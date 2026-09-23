@@ -1,0 +1,38 @@
+ Container ti4601-app-crdb-run-671ca0054a9f Creating 
+ Container ti4601-app-crdb-run-671ca0054a9f Created 
+=== CLIENTE ===
+ range_id |      start_key       |         end_key          | lease_holder | voting_replicas |                            replica_localities                            
+----------+----------------------+--------------------------+--------------+-----------------+--------------------------------------------------------------------------
+      100 | …/<TableMin>         | …/1/"@"                  |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      101 | …/1/"@"              | …/1/"@"/PrefixEnd        |            3 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      102 | …/1/"@"/PrefixEnd    | …/1/"\xc0"               |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      103 | …/1/"\xc0"           | …/1/"\xc0"/PrefixEnd     |            2 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      104 | …/1/"\xc0"/PrefixEnd | <after:/Table/114/1/"@"> |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+(5 rows)
+
+=== CUENTA ===
+ range_id |               start_key                |         end_key          | lease_holder | voting_replicas |                            replica_localities                            
+----------+----------------------------------------+--------------------------+--------------+-----------------+--------------------------------------------------------------------------
+      104 | <before:/Table/113/1/"\xc0"/PrefixEnd> | …/1/"@"                  |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      105 | …/1/"@"                                | …/1/"@"/PrefixEnd        |            3 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      106 | …/1/"@"/PrefixEnd                      | …/1/"\xc0"               |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      107 | …/1/"\xc0"                             | …/1/"\xc0"/PrefixEnd     |            2 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      108 | …/1/"\xc0"/PrefixEnd                   | <after:/Table/115/1/"@"> |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+(5 rows)
+
+=== MOVIMIENTO ===
+ range_id |               start_key                |       end_key        | lease_holder | voting_replicas |                            replica_localities                            
+----------+----------------------------------------+----------------------+--------------+-----------------+--------------------------------------------------------------------------
+      108 | <before:/Table/114/1/"\xc0"/PrefixEnd> | …/1/"@"              |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      109 | …/1/"@"                                | …/1/"@"/PrefixEnd    |            3 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      110 | …/1/"@"/PrefixEnd                      | …/1/"\xc0"           |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      111 | …/1/"\xc0"                             | …/1/"\xc0"/PrefixEnd |            2 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+      112 | …/1/"\xc0"/PrefixEnd                   | …/<TableMax>         |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+(5 rows)
+
+=== REFERENCIA_CUENTA ===
+ range_id |  start_key   |   end_key    | lease_holder | voting_replicas |                            replica_localities                            
+----------+--------------+--------------+--------------+-----------------+--------------------------------------------------------------------------
+      113 | …/<TableMin> | <after:/Max> |            1 | {1,2,3}         | {"region=cr-sj,zone=a","region=us-east,zone=a","region=cr-limon,zone=a"}
+(1 row)
+

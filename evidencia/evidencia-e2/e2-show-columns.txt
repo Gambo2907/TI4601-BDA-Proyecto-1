@@ -1,0 +1,33 @@
+ column_name |          data_type          | is_nullable |  column_default   | generation_expression |    indices     | is_hidden 
+-------------+-----------------------------+-------------+-------------------+-----------------------+----------------+-----------
+ cliente_id  | UUID                        | f           | gen_random_uuid() |                       | {cliente_pkey} | f
+ nombre      | STRING                      | f           |                   |                       | {cliente_pkey} | f
+ documento   | STRING                      | f           |                   |                       | {cliente_pkey} | f
+ region      | public.crdb_internal_region | f           |                   |                       | {cliente_pkey} | f
+(4 rows)
+
+ column_name |          data_type          | is_nullable |  column_default   | generation_expression |    indices    | is_hidden 
+-------------+-----------------------------+-------------+-------------------+-----------------------+---------------+-----------
+ cuenta_id   | UUID                        | f           | gen_random_uuid() |                       | {cuenta_pkey} | f
+ cliente_id  | UUID                        | f           |                   |                       | {cuenta_pkey} | f
+ saldo       | DECIMAL(12,2)               | f           |                   |                       | {cuenta_pkey} | f
+ region      | public.crdb_internal_region | f           |                   |                       | {cuenta_pkey} | f
+(4 rows)
+
+  column_name   |          data_type          | is_nullable |  column_default   | generation_expression |      indices      | is_hidden 
+----------------+-----------------------------+-------------+-------------------+-----------------------+-------------------+-----------
+ mov_id         | UUID                        | f           | gen_random_uuid() |                       | {movimiento_pkey} | f
+ cuenta_ori_id  | UUID                        | t           |                   |                       | {movimiento_pkey} | f
+ cuenta_dest_id | UUID                        | t           |                   |                       | {movimiento_pkey} | f
+ monto          | DECIMAL(12,2)               | f           |                   |                       | {movimiento_pkey} | f
+ tipo           | STRING                      | f           |                   |                       | {movimiento_pkey} | f
+ fecha          | TIMESTAMPTZ                 | f           | now()             |                       | {movimiento_pkey} | f
+ region         | public.crdb_internal_region | f           |                   |                       | {movimiento_pkey} | f
+(7 rows)
+
+ column_name |          data_type          | is_nullable | column_default | generation_expression |         indices          | is_hidden 
+-------------+-----------------------------+-------------+----------------+-----------------------+--------------------------+-----------
+ cuenta_id   | UUID                        | f           |                |                       | {referencia_cuenta_pkey} | f
+ region      | public.crdb_internal_region | f           |                |                       | {referencia_cuenta_pkey} | f
+(2 rows)
+

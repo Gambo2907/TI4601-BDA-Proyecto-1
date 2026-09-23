@@ -1,0 +1,7 @@
+ database |  region  | primary | secondary | zones 
+----------+----------+---------+-----------+-------
+ ti4601   | cr-sj    | t       | f         | {a}
+ ti4601   | cr-limon | f       | f         | {a}
+ ti4601   | us-east  | f       | f         | {a}
+(3 rows)
+

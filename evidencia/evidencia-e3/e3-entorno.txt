@@ -1,0 +1,52 @@
+ENTREGABLE 3 - ENTORNO EXPERIMENTAL
+==================================
+
+Fecha:
+mar 15 sept 2026 13:31:04 CST
+
+Sistema:
+Linux gustavo-HP-Laptop-14-ep0xxx 7.0.0-31-generic #31-Ubuntu SMP PREEMPT_DYNAMIC Sat Aug  1 04:26:38 UTC 2026 x86_64 GNU/Linux
+
+Docker:
+Docker version 29.8.0, build 88096ef
+
+Docker Compose:
+Docker Compose version v5.3.1
+
+Memoria:
+               total       usado       libre  compartido   búf/caché  disponible
+Mem:           7,0Gi       5,0Gi       550Mi       797Mi       2,1Gi       2,0Gi
+Inter:         4,0Gi       910Mi       3,1Gi
+
+CPU:
+CPU(s):                                   8
+Lista de la(s) CPU(s) en línea:           0-7
+Nombre del modelo:                        12th Gen Intel(R) Core(TM) i3-1215U
+«Socket(s)»:                              1
+CPU(s) factor de escala MHz:              39%
+CPU(s) del nodo NUMA 0:                   0-7
+
+Contenedores activos:
+NAMES           STATUS          PORTS
+ti4601-crdb-2   Up 14 minutes   8080/tcp, 26257/tcp
+ti4601-crdb-1   Up 14 minutes   127.0.0.1:8080->8080/tcp, 127.0.0.1:26257->26257/tcp
+ti4601-crdb-3   Up 14 minutes   8080/tcp, 26257/tcp
+
+Configuración del benchmark
+===========================
+
+Región del gateway: cr-sj
+Región local: cr-sj
+Región remota: cr-limon
+
+Warm-up por operación: 5
+Corridas medidas por operación: 50
+
+Casos:
+1. Lectura local: cr-sj -> datos de cr-sj
+2. Lectura remota: cr-sj -> datos de cr-limon
+3. Escritura local: transferencia cr-sj -> cr-sj
+4. Escritura interregional: transferencia cr-sj -> cr-limon
+
+Todas las pruebas fueron ejecutadas desde el mismo gateway
+y bajo el mismo clúster y condiciones de recursos.

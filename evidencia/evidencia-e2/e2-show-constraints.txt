@@ -1,0 +1,28 @@
+ table_name | constraint_name | constraint_type |           details            | validated 
+------------+-----------------+-----------------+------------------------------+-----------
+ cliente    | cliente_pkey    | PRIMARY KEY     | PRIMARY KEY (cliente_id ASC) | t
+(1 row)
+
+ table_name |  constraint_name   | constraint_type |                                  details                                   | validated 
+------------+--------------------+-----------------+----------------------------------------------------------------------------+-----------
+ cuenta     | check_saldo        | CHECK           | CHECK ((saldo >= 0))                                                       | t
+ cuenta     | cuenta_pkey        | PRIMARY KEY     | PRIMARY KEY (cuenta_id ASC)                                                | t
+ cuenta     | fk_cuenta_clientes | FOREIGN KEY     | FOREIGN KEY (cliente_id) REFERENCES cliente(cliente_id) ON DELETE RESTRICT | t
+(3 rows)
+
+ table_name |      constraint_name      | constraint_type |                                                                                                                                                                         details                                                                                                                                                                         | validated 
+------------+---------------------------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------
+ movimiento | check_cuenta              | CHECK           | CHECK (((((((tipo = 'TRANSFERENCIA'::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NOT NULL)) AND (cuenta_ori_id != cuenta_dest_id)) OR (((tipo = 'DEPOSITO'::STRING) AND (cuenta_ori_id IS NULL)) AND (cuenta_dest_id IS NOT NULL))) OR (((tipo = 'RETIRO'::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NULL)))) | t
+ movimiento | check_monto               | CHECK           | CHECK ((monto > 0))                                                                                                                                                                                                                                                                                                                                     | t
+ movimiento | check_tipo                | CHECK           | CHECK ((tipo IN ('TRANSFERENCIA'::STRING, 'DEPOSITO'::STRING, 'RETIRO'::STRING)))                                                                                                                                                                                                                                                                       | t
+ movimiento | fk_cuenta_dest_movimiento | FOREIGN KEY     | FOREIGN KEY (cuenta_dest_id) REFERENCES cuenta(cuenta_id) ON DELETE RESTRICT                                                                                                                                                                                                                                                                            | t
+ movimiento | fk_cuenta_ori_movimiento  | FOREIGN KEY     | FOREIGN KEY (cuenta_ori_id) REFERENCES cuenta(cuenta_id) ON DELETE RESTRICT                                                                                                                                                                                                                                                                             | t
+ movimiento | movimiento_pkey           | PRIMARY KEY     | PRIMARY KEY (mov_id ASC)                                                                                                                                                                                                                                                                                                                                | t
+(6 rows)
+
+    table_name     |    constraint_name     | constraint_type |                                 details                                 | validated 
+-------------------+------------------------+-----------------+-------------------------------------------------------------------------+-----------
+ referencia_cuenta | fk_referencia_cuenta   | FOREIGN KEY     | FOREIGN KEY (cuenta_id) REFERENCES cuenta(cuenta_id) ON DELETE RESTRICT | t
+ referencia_cuenta | referencia_cuenta_pkey | PRIMARY KEY     | PRIMARY KEY (cuenta_id ASC)                                             | t
+(2 rows)
+
