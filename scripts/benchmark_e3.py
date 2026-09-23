@@ -23,7 +23,7 @@ WARMUP = 5
 
 TRANSFER_AMOUNT = Decimal("0.01")
 
-OUTPUT_FILE = Path("/proyecto/evidencia/e3-mediciones.csv")
+OUTPUT_FILE = Path("/proyecto/evidencia/evidencia-e3/e3-mediciones.csv")
 
 
 
