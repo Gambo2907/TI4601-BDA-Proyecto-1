@@ -1,0 +1,41 @@
+ Container ti4601-app-crdb-run-aaad07f80e0e Creating 
+ Container ti4601-app-crdb-run-aaad07f80e0e Created 
+============================================================
+PRUEBA 1 - Saldo negativo: DEBE FALLAR
+============================================================
+ERROR:  failed to satisfy CHECK constraint (saldo >= 0:::DECIMAL)
+============================================================
+PRUEBA 2 - Monto cero: DEBE FALLAR
+============================================================
+ERROR:  failed to satisfy CHECK constraint (monto > 0:::DECIMAL)
+============================================================
+PRUEBA 3 - Deposito con origen: DEBE FALLAR
+============================================================
+ERROR:  failed to satisfy CHECK constraint ((((((tipo = 'TRANSFERENCIA':::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NOT NULL)) AND (cuenta_ori_id != cuenta_dest_id)) OR (((tipo = 'DEPOSITO':::STRING) AND (cuenta_ori_id IS NULL)) AND (cuenta_dest_id IS NOT NULL))) OR (((tipo = 'RETIRO':::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NULL)))
+============================================================
+PRUEBA 4 - Tipo invalido: DEBE FALLAR
+============================================================
+ERROR:  failed to satisfy CHECK constraint ((((((tipo = 'TRANSFERENCIA':::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NOT NULL)) AND (cuenta_ori_id != cuenta_dest_id)) OR (((tipo = 'DEPOSITO':::STRING) AND (cuenta_ori_id IS NULL)) AND (cuenta_dest_id IS NOT NULL))) OR (((tipo = 'RETIRO':::STRING) AND (cuenta_ori_id IS NOT NULL)) AND (cuenta_dest_id IS NULL)))
+============================================================
+PRUEBA 5 - Region inexistente: DEBE FALLAR
+============================================================
+ERROR:  invalid input value for enum crdb_internal_region: "eu-west"
+============================================================
+PRUEBA 6 - ReferenciaCuenta sin Cuenta: DEBE FALLAR
+============================================================
+ERROR:  insert on table "referencia_cuenta" violates foreign key constraint "fk_referencia_cuenta"
+DETAIL:  Key (cuenta_id)=('99999999-0000-0000-0000-000000000006') is not present in table "cuenta".
+============================================================
+PRUEBA 7 - Eliminar cliente con cuentas: DEBE FALLAR
+============================================================
+ERROR:  delete on table "cliente" violates foreign key constraint "fk_cuenta_clientes" on table "cuenta"
+DETAIL:  Key (cliente_id)=('8bda0363-49c7-5f6e-b206-a29e76c219fc') is still referenced from table "cuenta".
+============================================================
+VERIFICACION FINAL
+Los datos invalidos anteriores no deben haberse insertado.
+============================================================
+ registros_invalidos 
+---------------------
+                   0
+(1 row)
+

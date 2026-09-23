@@ -1,0 +1,27 @@
+=== E4: Verificacion de RPO (transcrito del historial de la sesion psql) ===
+
+--- Paso 1: escritura en estado sano (antes de detener el nodo) ---
+ti4601_ctrl=> UPDATE bitacora_continuidad SET version = version + 1, evento = 'estado_sano', updated_at = now() WHERE id = 1 RETURNING version, updated_at;
+ version |          updated_at
+---------+-------------------------------
+       2 | 2026-09-21 03:19:19.192454+00
+(1 row)
+UPDATE 1
+
+--- Paso 3: escritura tras detener crdb-2 (reintento) ---
+ti4601_ctrl=> UPDATE bitacora_continuidad SET version = version + 1, evento = 'intento_1', updated_at = now() WHERE id = 1 RETURNING version, updated_at;
+ version |          updated_at
+---------+-------------------------------
+       3 | 2026-09-21 03:23:12.011098+00
+(1 row)
+UPDATE 1
+
+--- Paso 4: verificacion final de RPO ---
+ti4601_ctrl=> SELECT id, version, updated_at FROM bitacora_continuidad WHERE id = 1;
+ id | version |          updated_at
+----+---------+-------------------------------
+  1 |       3 | 2026-09-21 03:23:12.011098+00
+(1 row)
+
+Conclusion: version paso de 2 (pre-falla) a 3 (post-falla) sin retroceso.
+No se observo perdida del commit confirmado antes de docker stop.

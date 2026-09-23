@@ -1,0 +1,39 @@
+==========================================
+ Benchmark E3 - Base de Datos Distribuida
+==========================================
+Región local:          cr-sj
+Región remota:         cr-limon
+Warm-up:               5
+Corridas por caso:     50
+Gateway utilizado:     cr-sj
+
+Cuentas seleccionadas:
+Lectura local:          55527079-adda-588e-9e53-259c161ce008
+Lectura remota:         955b4c32-56ce-5c39-ad4c-41e47e350735
+Transferencia local:    d97eccd0-cf52-5184-985e-5c6acaab75c9 -> 895ad380-6fd0-52e7-8002-46e588b17d19
+Transferencia remota:   9688fb1c-7639-54ba-acd6-77e8872e45ff -> c4bc6a0f-8b78-597a-af2c-1bd06113c03f
+
+[1/4] Lectura local
+Corrida 1/50Corrida 2/50Corrida 3/50Corrida 4/50Corrida 5/50Corrida 6/50Corrida 7/50Corrida 8/50Corrida 9/50Corrida 10/50Corrida 11/50Corrida 12/50Corrida 13/50Corrida 14/50Corrida 15/50Corrida 16/50Corrida 17/50Corrida 18/50Corrida 19/50Corrida 20/50Corrida 21/50Corrida 22/50Corrida 23/50Corrida 24/50Corrida 25/50Corrida 26/50Corrida 27/50Corrida 28/50Corrida 29/50Corrida 30/50Corrida 31/50Corrida 32/50Corrida 33/50Corrida 34/50Corrida 35/50Corrida 36/50Corrida 37/50Corrida 38/50Corrida 39/50Corrida 40/50Corrida 41/50Corrida 42/50Corrida 43/50Corrida 44/50Corrida 45/50Corrida 46/50Corrida 47/50Corrida 48/50Corrida 49/50Corrida 50/50
+
+[2/4] Lectura remota
+Corrida 1/50Corrida 2/50Corrida 3/50Corrida 4/50Corrida 5/50Corrida 6/50Corrida 7/50Corrida 8/50Corrida 9/50Corrida 10/50Corrida 11/50Corrida 12/50Corrida 13/50Corrida 14/50Corrida 15/50Corrida 16/50Corrida 17/50Corrida 18/50Corrida 19/50Corrida 20/50Corrida 21/50Corrida 22/50Corrida 23/50Corrida 24/50Corrida 25/50Corrida 26/50Corrida 27/50Corrida 28/50Corrida 29/50Corrida 30/50Corrida 31/50Corrida 32/50Corrida 33/50Corrida 34/50Corrida 35/50Corrida 36/50Corrida 37/50Corrida 38/50Corrida 39/50Corrida 40/50Corrida 41/50Corrida 42/50Corrida 43/50Corrida 44/50Corrida 45/50Corrida 46/50Corrida 47/50Corrida 48/50Corrida 49/50Corrida 50/50
+
+[3/4] Escritura local
+Corrida 1/50Corrida 2/50Corrida 3/50Corrida 4/50Corrida 5/50Corrida 6/50Corrida 7/50Corrida 8/50Corrida 9/50Corrida 10/50Corrida 11/50Corrida 12/50Corrida 13/50Corrida 14/50Corrida 15/50Corrida 16/50Corrida 17/50Corrida 18/50Corrida 19/50Corrida 20/50Corrida 21/50Corrida 22/50Corrida 23/50Corrida 24/50Corrida 25/50Corrida 26/50Corrida 27/50Corrida 28/50Corrida 29/50Corrida 30/50Corrida 31/50Corrida 32/50Corrida 33/50Corrida 34/50Corrida 35/50Corrida 36/50Corrida 37/50Corrida 38/50Corrida 39/50Corrida 40/50Corrida 41/50Corrida 42/50Corrida 43/50Corrida 44/50Corrida 45/50Corrida 46/50Corrida 47/50Corrida 48/50Corrida 49/50Corrida 50/50
+
+[4/4] Escritura interregional
+Corrida 1/50Corrida 2/50Corrida 3/50Corrida 4/50Corrida 5/50Corrida 6/50Corrida 7/50Corrida 8/50Corrida 9/50Corrida 10/50Corrida 11/50Corrida 12/50Corrida 13/50Corrida 14/50Corrida 15/50Corrida 16/50Corrida 17/50Corrida 18/50Corrida 19/50Corrida 20/50Corrida 21/50Corrida 22/50Corrida 23/50Corrida 24/50Corrida 25/50Corrida 26/50Corrida 27/50Corrida 28/50Corrida 29/50Corrida 30/50Corrida 31/50Corrida 32/50Corrida 33/50Corrida 34/50Corrida 35/50Corrida 36/50Corrida 37/50Corrida 38/50Corrida 39/50Corrida 40/50Corrida 41/50Corrida 42/50Corrida 43/50Corrida 44/50Corrida 45/50Corrida 46/50Corrida 47/50Corrida 48/50Corrida 49/50Corrida 50/50
+
+
+Operación                           n       p50 (ms)       p99 (ms)
+-------------------------------------------------------------------
+Lectura local                      50          0.326          1.276
+Lectura remota                     50          0.483          0.804
+Escritura local                    50         12.907         21.364
+Escritura interregional            50         20.924         24.125
+
+CSV generado en: /proyecto/evidencia/e3-mediciones.csv
+
+Restaurando base de datos...
+Base de datos restaurada.

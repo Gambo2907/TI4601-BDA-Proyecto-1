@@ -1,0 +1,81 @@
+ Container ti4601-app-crdb-run-4578fe8bfcb9 Creating 
+ Container ti4601-app-crdb-run-4578fe8bfcb9 Created 
+=== CLIENTES POR REGION ===
+  region  | clientes 
+----------+----------
+ cr-limon |       27
+ cr-sj    |       50
+ us-east  |      100
+(3 rows)
+
+=== CUENTAS POR REGION ===
+  region  | cuentas 
+----------+---------
+ cr-limon |      30
+ cr-sj    |      60
+ us-east  |     330
+(3 rows)
+
+=== MOVIMIENTOS POR REGION ===
+  region  | movimientos 
+----------+-------------
+ cr-limon |          50
+ cr-sj    |         100
+ us-east  |         500
+(3 rows)
+
+=== MOVIMIENTOS POR TIPO ===
+     tipo      | cantidad 
+---------------+----------
+ DEPOSITO      |       98
+ RETIRO        |      227
+ TRANSFERENCIA |      325
+(3 rows)
+
+=== MOVIMIENTOS POR REGION Y TIPO ===
+  region  |     tipo      | cantidad 
+----------+---------------+----------
+ cr-limon | DEPOSITO      |        8
+ cr-limon | RETIRO        |       17
+ cr-limon | TRANSFERENCIA |       25
+ cr-sj    | DEPOSITO      |       15
+ cr-sj    | RETIRO        |       35
+ cr-sj    | TRANSFERENCIA |       50
+ us-east  | DEPOSITO      |       75
+ us-east  | RETIRO        |      175
+ us-east  | TRANSFERENCIA |      250
+(9 rows)
+
+=== TOTAL CUENTAS VS REFERENCIAS ===
+ cuentas | referencias 
+---------+-------------
+     420 |         420
+(1 row)
+
+=== CUENTAS EN REGION DISTINTA A SU CLIENTE ===
+ cuentas_interregionales 
+-------------------------
+                      70
+(1 row)
+
+=== EJEMPLOS DE CUENTAS INTERREGIONALES ===
+              cliente_id              | region_cliente |              cuenta_id               | region_cuenta 
+--------------------------------------+----------------+--------------------------------------+---------------
+ 31c25b67-c75a-516b-bd16-f3f00826369a | us-east        | bbe7eda3-c6ef-5465-be1c-ca797e4fc73f | cr-sj
+ 648f68ef-80aa-548f-afff-a250692cb532 | us-east        | 5df80766-474b-5601-b3cf-139a1423bb41 | cr-sj
+ cd2b09df-d55b-5b9e-9030-c9a20527adf8 | us-east        | a571dbfb-2f23-5245-9f16-e0fecd64809d | cr-sj
+ 7953ba46-e972-56e6-ac86-ca5d09b82431 | cr-sj          | 729b61fb-faa0-5834-a70c-01ef1d7d0392 | cr-limon
+ 16293dd6-33c8-502f-9ec7-4c2d19c88a81 | cr-sj          | e94beee2-ddb2-53be-b5b8-cbe26075eed8 | cr-limon
+ 28d3d7bb-2213-5298-8f68-66d877b0e69b | cr-sj          | 09d7839a-4fc9-5495-93a6-d3a95635609d | us-east
+ 28d3d7bb-2213-5298-8f68-66d877b0e69b | cr-sj          | 29f5efed-b0f4-536b-ba91-dd07a8b81723 | us-east
+ 483df621-a679-57d5-b1cc-fbd477e9e0d2 | cr-sj          | 2135b2a5-08c4-5b98-afbf-fa1275edd706 | us-east
+ 6dc8268f-43d1-583c-8a1f-852ade24af10 | cr-sj          | f1e02bba-0621-5acf-ba1f-39ab1ca7fe24 | cr-limon
+ 8ce11412-b262-521d-9bde-6d5f7e162026 | cr-sj          | 29f616a8-0b82-544a-b532-2a24e3f94120 | us-east
+(10 rows)
+
+=== TRANSFERENCIAS ENTRE REGIONES ===
+ transferencias_interregionales 
+--------------------------------
+                            162
+(1 row)
+
